@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPosterUrl } from '../api/tmdb';
-import { ArrowLeftIcon, ClockIcon, FilmIcon, HeartFilledIcon, HeartIcon, StarIcon } from '../components/icons';
-import { MovieCard } from '../components/movie/MovieCard';
+import { ArrowLeftIcon, FilmIcon, HeartFilledIcon, HeartIcon, StarIcon } from '../components/icons';
 import { MovieCardOverlay } from '../components/movie/MovieCardOverlay';
 import { ErrorState } from '../components/ui/ErrorState';
 import { useFavorites } from '../hooks/useFavorites';
@@ -13,7 +12,7 @@ const formatCurrency = (n: number) =>
   n > 0 ? `$${fmt.format(n)}` : 'N/A';
 
 const formatRuntime = (minutes: number | null) => {
-  if (!minutes) return 'N/A';
+  if (!minutes) return null;
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
   return `${h}h ${m}m`;
@@ -44,6 +43,8 @@ const Skeleton = () => (
   </div>
 );
 
+const Dot = () => <span className="text-gray-300">•</span>;
+
 const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -67,11 +68,15 @@ const MovieDetails = () => {
 
   const posterUrl = getPosterUrl(movie.poster_path, 'w500');
   const director = movie.credits?.crew.find((c) => c.job === 'Director')?.name ?? 'N/A';
-  const cast = movie.credits?.cast
-    .slice(0, 4)
-    .map((c) => c.name)
-    .join(', ') ?? 'N/A';
+  const cast = movie.credits?.cast.slice(0, 4).map((c) => c.name).join(', ') ?? 'N/A';
   const favorited = isFavorite(movie.id);
+  const runtime = formatRuntime(movie.runtime);
+  const year = movie.release_date ? new Date(movie.release_date).getFullYear() : null;
+
+  const meta = [
+    year && String(year),
+    runtime,
+  ].filter(Boolean) as string[];
 
   return (
     <div className="space-y-8">
@@ -101,35 +106,30 @@ const MovieDetails = () => {
         </div>
 
         {/* Details */}
-        <div className="flex-1 space-y-6">
+        <div className="flex-1 space-y-5">
           {/* Title & meta */}
           <div>
             <h1 className="text-3xl font-bold text-gray-900">{movie.title}</h1>
-            <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-500">
-              {movie.release_date && (
-                <span>{new Date(movie.release_date).getFullYear()}</span>
-              )}
-              {movie.runtime && (
-                <span className="flex items-center gap-1">
-                  <ClockIcon size={13} /> {formatRuntime(movie.runtime)}
-                </span>
-              )}
-              {movie.original_language && (
-                <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs uppercase">
-                  {movie.original_language}
-                </span>
-              )}
-            </div>
+            {meta.length > 0 && (
+              <div className="mt-1.5 flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                {meta.map((item, i) => (
+                  <span key={item} className="flex items-center gap-2">
+                    {i > 0 && <Dot />}
+                    {item}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Rating + Favorite */}
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
-              <StarIcon size={20} className="text-yellow-400" />
-              <span className="text-xl font-bold text-gray-900">
+            <div className="flex items-center gap-1.5">
+              <StarIcon size={18} className="text-yellow-400" />
+              <span className="text-lg font-bold text-gray-900">
                 {movie.vote_average.toFixed(1)}
               </span>
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-400">
                 ({fmt.format(movie.vote_count)} votes)
               </span>
             </div>
@@ -137,22 +137,16 @@ const MovieDetails = () => {
             <button
               onClick={() => toggleFavorite(movie.id)}
               className={[
-                'flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition',
+                'flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition',
                 favorited
-                  ? 'bg-red-50 text-red-600 hover:bg-red-100'
-                  : 'bg-blue-600 text-white hover:bg-blue-700',
+                  ? 'border-red-200 bg-red-50 text-red-600 hover:bg-red-100'
+                  : 'border-blue-500 bg-white text-blue-600 hover:bg-blue-50',
               ].join(' ')}
             >
               {favorited ? (
-                <>
-                  <HeartFilledIcon size={16} className="text-red-500" />
-                  Remove Favorite
-                </>
+                <><HeartFilledIcon size={15} /> Remove Favorite</>
               ) : (
-                <>
-                  <HeartIcon size={16} />
-                  Add to Favorites
-                </>
+                <><HeartIcon size={15} /> Add to Favorites</>
               )}
             </button>
           </div>
@@ -160,7 +154,7 @@ const MovieDetails = () => {
           {/* Overview */}
           {movie.overview && (
             <div>
-              <h2 className="mb-2 text-base font-semibold text-gray-900">Overview</h2>
+              <h2 className="mb-1.5 text-base font-semibold text-gray-900">Overview</h2>
               <p className="leading-relaxed text-gray-600">{movie.overview}</p>
             </div>
           )}
@@ -168,7 +162,7 @@ const MovieDetails = () => {
           {/* Genres */}
           {movie.genres.length > 0 && (
             <div>
-              <h2 className="mb-2 text-base font-semibold text-gray-900">Genres</h2>
+              <h2 className="mb-1.5 text-base font-semibold text-gray-900">Genres</h2>
               <div className="flex flex-wrap gap-2">
                 {movie.genres.map((g) => (
                   <span
@@ -182,24 +176,22 @@ const MovieDetails = () => {
             </div>
           )}
 
-          {/* Metadata table */}
-          <div className="rounded-xl border border-gray-200 bg-white">
-            <dl className="divide-y divide-gray-100">
-              {[
-                { label: 'Release Date', value: formatDate(movie.release_date) },
-                { label: 'Director', value: director },
-                { label: 'Cast', value: cast },
-                { label: 'Language', value: movie.original_language.toUpperCase() },
-                { label: 'Budget', value: formatCurrency(movie.budget) },
-                { label: 'Revenue', value: formatCurrency(movie.revenue) },
-              ].map(({ label, value }) => (
-                <div key={label} className="flex px-4 py-3">
-                  <dt className="w-32 flex-shrink-0 text-sm text-gray-500">{label}</dt>
-                  <dd className="text-sm font-medium text-gray-900">{value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          {/* Metadata */}
+          <dl className="space-y-2">
+            {[
+              { label: 'Release Date', value: formatDate(movie.release_date) },
+              { label: 'Director', value: director },
+              { label: 'Cast', value: cast },
+              { label: 'Language', value: movie.original_language.toUpperCase() },
+              { label: 'Budget', value: formatCurrency(movie.budget) },
+              { label: 'Revenue', value: formatCurrency(movie.revenue) },
+            ].map(({ label, value }) => (
+              <div key={label} className="flex gap-4">
+                <dt className="w-28 flex-shrink-0 text-sm text-gray-500">{label}</dt>
+                <dd className="text-sm font-medium text-gray-900">{value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
 
@@ -209,9 +201,9 @@ const MovieDetails = () => {
           <h2 className="mb-4 text-lg font-bold text-gray-900">Similar Movies</h2>
           <div className="overflow-hidden rounded-2xl">
             <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide">
-              {similar.results.slice(0, 10).map((movie) => (
-                <div key={movie.id} className="w-36 flex-shrink-0 sm:w-40">
-                  <MovieCardOverlay movie={movie} />
+              {similar.results.slice(0, 10).map((m) => (
+                <div key={m.id} className="w-36 flex-shrink-0 sm:w-40">
+                  <MovieCardOverlay movie={m} />
                 </div>
               ))}
             </div>
