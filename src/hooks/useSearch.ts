@@ -26,7 +26,7 @@ const applyClientFilters = (movies: Movie[], filters: SearchFilters): Movie[] =>
 };
 
 export const useSearchMovies = (query: string, filters: SearchFilters, page = 1) => {
-  const hasTextQuery = !!query.trim();
+  const hasTextQuery = query.trim().length > 1;
   const hasFilters = !!(filters.genreId || filters.year || filters.minRating);
   const enabled = hasTextQuery || hasFilters;
 

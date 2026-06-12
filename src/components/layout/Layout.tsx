@@ -10,7 +10,7 @@ const SearchBar = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
     setValue(v);
-    if (v.trim()) {
+    if (v.trim().length > 1) {
       navigate(`/search?q=${encodeURIComponent(v.trim())}`, { replace: true });
     }
   };
