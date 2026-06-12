@@ -62,7 +62,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50">
       {/* Mobile backdrop overlay */}
       {sidebarOpen && (
         <div
@@ -71,19 +71,20 @@ export const Layout = ({ children }: LayoutProps) => {
         />
       )}
 
-      {/* Sidebar — fixed drawer on mobile, static flex item on desktop */}
+      {/* Sidebar — fixed drawer on mobile, sticky column on desktop */}
       <div
         className={[
           'fixed inset-y-0 left-0 z-30 transition-transform duration-300 ease-in-out',
-          'lg:static lg:z-auto lg:translate-x-0',
+          'lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         ].join(' ')}
       >
         <Sidebar onClose={() => setSidebarOpen(false)} />
       </div>
 
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex flex-shrink-0 items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 lg:px-6">
+      {/* Content column */}
+      <div className="flex flex-1 flex-col">
+        <header className="sticky top-0 z-10 flex flex-shrink-0 items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 lg:px-6">
           {/* Hamburger — only on mobile/tablet */}
           <button
             onClick={() => setSidebarOpen(true)}
@@ -104,7 +105,7 @@ export const Layout = ({ children }: LayoutProps) => {
           </button>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-4 py-4 lg:px-6 lg:py-6">{children}</main>
+        <main className="flex-1 px-4 py-4 lg:px-6 lg:py-6">{children}</main>
       </div>
     </div>
   );
