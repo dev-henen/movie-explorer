@@ -210,7 +210,7 @@ const MovieDetails = () => {
           <div className="overflow-hidden rounded-2xl">
             <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide">
               {similar.results.slice(0, 10).map((movie) => (
-                <div key={movie.id} className="w-36 flex-shrink-0 sm:w-44">
+                <div key={movie.id} className="w-36 flex-shrink-0 sm:w-40">
                   <MovieCardOverlay movie={movie} />
                 </div>
               ))}

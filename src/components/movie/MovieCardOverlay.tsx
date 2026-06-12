@@ -21,10 +21,10 @@ export const MovieCardOverlay = ({ movie }: MovieCardOverlayProps) => {
             src={posterUrl}
             alt={movie.title}
             loading="lazy"
-            className="aspect-[2/3] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          <div className="flex aspect-[2/3] items-center justify-center">
+          <div className="flex aspect-square items-center justify-center">
             <FilmIcon size={36} className="text-gray-300" />
           </div>
         )}
