@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { MovieCard } from '../components/movie/MovieCard';
+import { MovieCardSquare } from '../components/movie/MovieCardSquare';
 import { FilterBar } from '../components/search/FilterBar';
 import { EmptyState } from '../components/ui/EmptyState';
 import { ErrorState } from '../components/ui/ErrorState';
@@ -85,7 +85,7 @@ const Search = () => {
       {showResults && data && data.results.length > 0 && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           {data.results.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCardSquare key={movie.id} movie={movie} />
           ))}
         </div>
       )}
