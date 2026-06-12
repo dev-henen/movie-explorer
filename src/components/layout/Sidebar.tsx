@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { AwardIcon, CalendarIcon, HomeIcon, TrendingUpIcon, XIcon } from '../icons';
+import { CalendarIcon, HomeIcon, TrendingUpIcon, XIcon } from '../icons';
+import { Star } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home', Icon: HomeIcon, end: true },
-  { to: '/popular', label: 'Popular', Icon: TrendingUpIcon, end: false },
-  { to: '/top-rated', label: 'Top Rated', Icon: AwardIcon, end: false },
+  { to: '/popular', label: 'Popular', Icon: Star, end: false },
+  { to: '/top-rated', label: 'Top Rated', Icon: TrendingUpIcon, end: false },
   { to: '/upcoming', label: 'Upcoming', Icon: CalendarIcon, end: false },
 ];
 
