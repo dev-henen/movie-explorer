@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { getBackdropUrl, getPosterUrl } from '../api/tmdb';
+import { getPosterUrl } from '../api/tmdb';
 import { ArrowLeftIcon, ClockIcon, FilmIcon, HeartFilledIcon, HeartIcon, StarIcon } from '../components/icons';
 import { MovieCard } from '../components/movie/MovieCard';
 import { ErrorState } from '../components/ui/ErrorState';
@@ -30,7 +30,6 @@ const formatDate = (dateStr: string) => {
 const Skeleton = () => (
   <div className="animate-pulse space-y-6">
     <div className="h-8 w-48 rounded bg-gray-200" />
-    <div className="h-44 rounded-2xl bg-gray-200 sm:h-56" />
     <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
       <div className="h-64 w-full max-w-xs rounded-2xl bg-gray-200 sm:h-80 lg:w-64 lg:flex-shrink-0" />
       <div className="flex-1 space-y-4 pt-2">
@@ -66,7 +65,6 @@ const MovieDetails = () => {
   }
 
   const posterUrl = getPosterUrl(movie.poster_path, 'w500');
-  const backdropUrl = getBackdropUrl(movie.backdrop_path, 'w1280');
   const director = movie.credits?.crew.find((c) => c.job === 'Director')?.name ?? 'N/A';
   const cast = movie.credits?.cast
     .slice(0, 4)
@@ -83,19 +81,6 @@ const MovieDetails = () => {
       >
         <ArrowLeftIcon size={16} /> Back
       </button>
-
-      {/* Backdrop */}
-      {backdropUrl && (
-        <div className="relative h-56 overflow-hidden rounded-2xl sm:h-72">
-          <img
-            src={backdropUrl}
-            alt=""
-            aria-hidden
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        </div>
-      )}
 
       {/* Main content */}
       <div className="flex flex-col gap-8 lg:flex-row">
