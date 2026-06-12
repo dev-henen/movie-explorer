@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getPosterUrl } from '../api/tmdb';
 import { ArrowLeftIcon, ClockIcon, FilmIcon, HeartFilledIcon, HeartIcon, StarIcon } from '../components/icons';
 import { MovieCard } from '../components/movie/MovieCard';
+import { MovieCardOverlay } from '../components/movie/MovieCardOverlay';
 import { ErrorState } from '../components/ui/ErrorState';
 import { useFavorites } from '../hooks/useFavorites';
 import { useMovieDetails, useSimilarMovies } from '../hooks/useMovieDetails';
@@ -206,12 +207,14 @@ const MovieDetails = () => {
       {similar && similar.results.length > 0 && (
         <div>
           <h2 className="mb-4 text-lg font-bold text-gray-900">Similar Movies</h2>
-          <div className="flex gap-4 overflow-x-auto pb-3">
-            {similar.results.slice(0, 10).map((movie) => (
-              <div key={movie.id} className="w-36 flex-shrink-0 sm:w-44">
-                <MovieCard movie={movie} />
-              </div>
-            ))}
+          <div className="overflow-hidden rounded-2xl">
+            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide">
+              {similar.results.slice(0, 10).map((movie) => (
+                <div key={movie.id} className="w-36 flex-shrink-0 sm:w-44">
+                  <MovieCardOverlay movie={movie} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
