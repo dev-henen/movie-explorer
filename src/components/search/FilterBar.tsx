@@ -81,7 +81,7 @@ export const FilterBar = ({ filters, genres, onChange, onClear, resultCount }: F
         {hasActiveFilters(filters) && (
           <button
             onClick={onClear}
-            className="col-span-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition hover:border-gray-300 hover:bg-gray-50 sm:col-span-1 sm:self-end"
+            className="col-span-2 self-end px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 sm:col-span-1"
           >
             Clear Filters
           </button>
