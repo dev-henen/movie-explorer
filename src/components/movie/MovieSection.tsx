@@ -30,12 +30,14 @@ export const MovieSection = ({
     </div>
 
     {layout === 'row' ? (
-      <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide">
-        {movies.map((movie) => (
-          <div key={movie.id} className="w-36 flex-shrink-0 sm:w-44">
-            <MovieCard movie={movie} />
-          </div>
-        ))}
+      <div className="overflow-hidden rounded-2xl">
+        <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide">
+          {movies.map((movie) => (
+            <div key={movie.id} className="w-36 flex-shrink-0 sm:w-44">
+              <MovieCard movie={movie} />
+            </div>
+          ))}
+        </div>
       </div>
     ) : (
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
