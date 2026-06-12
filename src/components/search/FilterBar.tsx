@@ -28,7 +28,7 @@ const Select = ({
   onChange: (v: string) => void;
 }) => (
   <div className="flex flex-col gap-1">
-    <label className="text-xs font-medium text-gray-500">{label}</label>
+    <label className="text-xs font-semibold text-gray-600">{label}</label>
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
