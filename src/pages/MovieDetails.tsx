@@ -137,10 +137,10 @@ const MovieDetails = () => {
             <button
               onClick={() => toggleFavorite(movie.id)}
               className={[
-                'flex items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition sm:w-auto',
+                'flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition sm:w-auto',
                 favorited
-                  ? 'border-red-200 bg-red-50 text-red-600 hover:bg-red-100'
-                  : 'border-blue-500 bg-white text-blue-600 hover:bg-blue-50',
+                  ? 'bg-red-50 text-red-600 hover:bg-red-100'
+                  : 'bg-blue-600 text-white hover:bg-blue-700',
               ].join(' ')}
             >
               {favorited ? (
