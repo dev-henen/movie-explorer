@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { CalendarIcon, HomeIcon, TrendingUpIcon, XIcon } from '../icons';
-import { Star } from 'lucide-react';
+import { LayoutGrid, Star } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home', Icon: HomeIcon, end: true },
@@ -18,15 +18,7 @@ export const Sidebar = ({ onClose }: SidebarProps) => (
     {/* Logo */}
     <div className="flex items-center gap-3 px-5 py-6">
       <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="white"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4zm2 2v2h2V6H5zm0 4v2h2v-2H5zm0 4v2h2v-2H5zm4-8v2h6V6H9zm0 4v2h6v-2H9zm0 4v2h6v-2H9zm8-8v2h2V6h-2zm0 4v2h2v-2h-2zm0 4v2h2v-2h-2z" />
-        </svg>
+        <LayoutGrid size={18} className="text-white" />
       </div>
       <span className="flex-1 text-lg font-bold text-gray-900">MovieHub</span>
       {onClose && (
