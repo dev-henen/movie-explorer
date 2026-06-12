@@ -27,6 +27,11 @@ Get your API key at https://www.themoviedb.org/settings/api and add it to `.env`
 VITE_TMDB_API_KEY=your_tmdb_api_key_here
 ```
 
+> **Quick test key (temporary — will be reset soon):**
+> ```env
+> VITE_TMDB_API_KEY=8fae32a3be8da0cb228bded1d532f03b
+> ```
+
 **3. Start the dev server**
 
 ```bash
