@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilterIcon, MenuIcon, SearchIcon, XIcon } from '../icons';
 import { Sidebar } from './Sidebar';
@@ -60,6 +60,13 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <div className="flex min-h-screen overflow-x-clip bg-gray-50">
@@ -84,7 +91,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
       {/* Content column */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-10 flex flex-shrink-0 items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 lg:px-6">
+        <header className={`sticky top-0 z-10 flex flex-shrink-0 items-center gap-3 bg-white px-4 py-3 transition-shadow lg:px-6 ${scrolled ? 'border-b border-gray-200 shadow-sm' : ''}`}>
           {/* Hamburger — only on mobile/tablet */}
           <button
             onClick={() => setSidebarOpen(true)}
