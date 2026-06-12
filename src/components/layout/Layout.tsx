@@ -69,7 +69,7 @@ export const Layout = ({ children }: LayoutProps) => {
   }, []);
 
   return (
-    <div className="flex min-h-screen overflow-x-clip bg-gray-50">
+    <div className="flex min-h-screen overflow-x-clip bg-white">
       {/* Mobile backdrop overlay */}
       {sidebarOpen && (
         <div
