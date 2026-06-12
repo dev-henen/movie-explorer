@@ -53,7 +53,7 @@ export const FilterBar = ({ filters, genres, onChange, onClear, resultCount }: F
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="flex flex-wrap items-end gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-end sm:gap-4">
         <Select
           label="Genre"
           value={filters.genreId}
@@ -81,13 +81,13 @@ export const FilterBar = ({ filters, genres, onChange, onClear, resultCount }: F
         {hasActiveFilters(filters) && (
           <button
             onClick={onClear}
-            className="self-end rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition hover:border-gray-300 hover:bg-gray-50"
+            className="col-span-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition hover:border-gray-300 hover:bg-gray-50 sm:col-span-1 sm:self-end"
           >
             Clear Filters
           </button>
         )}
         {resultCount !== undefined && (
-          <p className="ml-auto self-end text-sm text-gray-500">
+          <p className="col-span-2 text-sm text-gray-500 sm:col-span-1 sm:ml-auto sm:self-end">
             {resultCount} result{resultCount !== 1 ? 's' : ''} found
           </p>
         )}

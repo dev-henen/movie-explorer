@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FilterIcon, SearchIcon, XIcon } from '../icons';
+import { FilterIcon, MenuIcon, SearchIcon, XIcon } from '../icons';
 import { Sidebar } from './Sidebar';
 
 const SearchBar = () => {
@@ -59,24 +59,52 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
-      <Sidebar />
+      {/* Mobile backdrop overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-20 bg-black/50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar — fixed drawer on mobile, static flex item on desktop */}
+      <div
+        className={[
+          'fixed inset-y-0 left-0 z-30 transition-transform duration-300 ease-in-out',
+          'lg:static lg:z-auto lg:translate-x-0',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full',
+        ].join(' ')}
+      >
+        <Sidebar onClose={() => setSidebarOpen(false)} />
+      </div>
 
       <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex flex-shrink-0 items-center gap-3 border-b border-gray-200 bg-white px-6 py-3">
+        <header className="flex flex-shrink-0 items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 lg:px-6">
+          {/* Hamburger — only on mobile/tablet */}
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="flex-shrink-0 rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 lg:hidden"
+            aria-label="Open menu"
+          >
+            <MenuIcon size={20} />
+          </button>
+
           <SearchBar />
+
           <button
             onClick={() => navigate('/search')}
-            className="flex flex-shrink-0 items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
+            className="flex flex-shrink-0 items-center gap-2 rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 sm:px-4"
           >
             <FilterIcon size={15} />
-            Filters
+            <span className="hidden sm:inline">Filters</span>
           </button>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-6 py-6">{children}</main>
+        <main className="flex-1 overflow-y-auto px-4 py-4 lg:px-6 lg:py-6">{children}</main>
       </div>
     </div>
   );

@@ -30,9 +30,10 @@ const formatDate = (dateStr: string) => {
 const Skeleton = () => (
   <div className="animate-pulse space-y-6">
     <div className="h-8 w-48 rounded bg-gray-200" />
-    <div className="flex gap-8">
-      <div className="h-[450px] w-72 flex-shrink-0 rounded-2xl bg-gray-200" />
-      <div className="flex-1 space-y-4 pt-4">
+    <div className="h-44 rounded-2xl bg-gray-200 sm:h-56" />
+    <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
+      <div className="h-64 w-full max-w-xs rounded-2xl bg-gray-200 sm:h-80 lg:w-64 lg:flex-shrink-0" />
+      <div className="flex-1 space-y-4 pt-2">
         <div className="h-8 w-3/4 rounded bg-gray-200" />
         <div className="h-5 w-1/2 rounded bg-gray-200" />
         <div className="h-4 w-full rounded bg-gray-200" />

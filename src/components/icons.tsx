@@ -66,3 +66,4 @@ export const FilmIcon = icon(
   'M2 2h20v20H2z M7 2v20 M17 2v20 M2 12h20 M2 7h5 M2 17h5 M17 17h5 M17 7h5'
 );
 export const ClockIcon = icon('M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z M12 6v6l4 2');
+export const MenuIcon = icon('M4 6h16 M4 12h16 M4 18h16');
