@@ -1,51 +1,69 @@
 # Movie Explorer
 
-A starter React + TypeScript + Vite app with Tailwind CSS, React Router, Axios, and TanStack Query.
+A movie browsing app built with React, TypeScript, and Vite. Browse popular, top rated, and upcoming movies, search with filters, and save favorites — powered by the [TMDB API](https://www.themoviedb.org/).
 
-## Features
+## Prerequisites
 
-- React 18 + TypeScript
-- Vite build tooling
-- Tailwind CSS for styling
-- React Router for client-side routing
-- Axios for HTTP requests
-- TanStack Query for data fetching and caching
+- Node.js 18+
+- A free [TMDB API key](https://www.themoviedb.org/settings/api)
 
-## Setup
+## Getting started
 
-1. Install dependencies:
+**1. Install dependencies**
 
 ```bash
 npm install
 ```
 
-2. Run the development server:
+**2. Set up environment variables**
+
+```bash
+cp .env.example .env
+```
+
+Get your API key at https://www.themoviedb.org/settings/api and add it to `.env`:
+
+```env
+VITE_TMDB_API_KEY=your_tmdb_api_key_here
+```
+
+**3. Start the dev server**
 
 ```bash
 npm run dev
 ```
 
-3. Build for production:
+The app will be available at `http://localhost:5173`.
 
-```bash
-npm run build
-```
+## Other commands
 
-4. Preview the production build:
-
-```bash
-npm run preview
-```
+| Command | Description |
+|---|---|
+| `npm run build` | Type-check and build for production (output in `dist/`) |
+| `npm run preview` | Preview the production build locally |
+| `npm run typecheck` | Run TypeScript type checking without building |
 
 ## Project structure
 
-- `src/main.tsx` – application entrypoint
-- `src/App.tsx` – route definitions and layout wrapper
-- `src/api/movieApi.ts` – Axios API client and movie fetch helpers
-- `src/pages` – page-level components
-- `src/components` – layout and reusable UI components
-- `tailwind.config.js` – Tailwind CSS configuration
+```
+src/
+├── api/          # TMDB Axios client and fetch helpers
+├── components/
+│   ├── icons.tsx         # Icon wrappers
+│   ├── layout/           # Layout, header, SearchBar, Sidebar
+│   ├── movie/            # MovieCard variants, RatingBadge, MovieSection
+│   ├── search/           # FilterBar, FilterSelect
+│   └── ui/               # ErrorState, EmptyState, LoadingGrid, Pagination
+├── hooks/        # Data-fetching hooks (useMovies, useMovieDetails, useFavorites)
+├── pages/        # Route-level page components
+└── types/        # TypeScript types for TMDB API responses
+```
 
-## Notes
+## Tech stack
 
-This starter app includes a sample movie browsing flow with React Router and React Query. Update the API endpoints in `src/api/movieApi.ts` to connect to your preferred movie data source.
+- **React 18** + **TypeScript**
+- **Vite** — dev server and build tooling
+- **Tailwind CSS** — utility-first styling
+- **React Router v6** — client-side routing
+- **TanStack Query v5** — data fetching and caching
+- **Axios** — HTTP client
