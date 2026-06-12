@@ -62,7 +62,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen overflow-x-hidden bg-gray-50">
       {/* Mobile backdrop overlay */}
       {sidebarOpen && (
         <div
@@ -83,7 +83,7 @@ export const Layout = ({ children }: LayoutProps) => {
       </div>
 
       {/* Content column */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-10 flex flex-shrink-0 items-center gap-3 border-b border-gray-200 bg-white px-4 py-3 lg:px-6">
           {/* Hamburger — only on mobile/tablet */}
           <button
