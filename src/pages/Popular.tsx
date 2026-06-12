@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MovieCard } from '../components/movie/MovieCard';
 import { ErrorState } from '../components/ui/ErrorState';
 import { LoadingGrid } from '../components/ui/LoadingGrid';
+import { Pagination } from '../components/ui/Pagination';
 import { usePopular } from '../hooks/useMovies';
 
 const Popular = () => {
@@ -26,25 +27,12 @@ const Popular = () => {
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-3 pt-4">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage((p) => p - 1)}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              Previous
-            </button>
-            <span className="text-sm text-gray-500">
-              Page {data.page} of {Math.min(data.total_pages, 500)}
-            </span>
-            <button
-              disabled={page >= data.total_pages}
-              onClick={() => setPage((p) => p + 1)}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              Next
-            </button>
-          </div>
+          <Pagination
+            page={data.page}
+            totalPages={data.total_pages}
+            onPrev={() => setPage((p) => p - 1)}
+            onNext={() => setPage((p) => p + 1)}
+          />
         </>
       )}
     </div>

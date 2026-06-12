@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { getPosterUrl } from '../../api/tmdb';
 import type { Movie } from '../../types/tmdb';
-import { FilmIcon, StarIcon } from '../icons';
+import { FilmIcon } from '../icons';
+import { RatingBadge } from './RatingBadge';
 
 interface MovieCardOverlayProps {
   movie: Movie;
@@ -29,13 +30,7 @@ export const MovieCardOverlay = ({ movie }: MovieCardOverlayProps) => {
           </div>
         )}
 
-        {/* Rating badge */}
-        <div className="absolute right-2 top-2 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-0.5 backdrop-blur-sm">
-          <StarIcon size={11} className="text-yellow-400" />
-          <span className="text-xs font-semibold text-white">
-            {movie.vote_average.toFixed(1)}
-          </span>
-        </div>
+        <RatingBadge rating={movie.vote_average} />
 
         {/* Title overlay */}
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent px-2.5 pb-2.5 pt-10">

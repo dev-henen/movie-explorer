@@ -1,4 +1,5 @@
 import type { Genre, SearchFilters } from '../../types/tmdb';
+import { FilterSelect } from '../ui/FilterSelect';
 
 const YEARS = Array.from({ length: 35 }, (_, i) => String(new Date().getFullYear() - i));
 const RATINGS = ['5', '6', '7', '7.5', '8', '8.5', '9'];
@@ -16,34 +17,6 @@ interface FilterBarProps {
   resultCount?: number;
 }
 
-const Select = ({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: { value: string; label: string }[];
-  onChange: (v: string) => void;
-}) => (
-  <div className="flex flex-col gap-1">
-    <label className="text-xs font-semibold text-gray-600">{label}</label>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-    >
-      <option value="">All {label}s</option>
-      {options.map((o) => (
-        <option key={o.value} value={o.value}>
-          {o.label}
-        </option>
-      ))}
-    </select>
-  </div>
-);
-
 const hasActiveFilters = (f: SearchFilters) =>
   !!(f.genreId || f.year || f.minRating || f.sortBy);
 
@@ -54,25 +27,25 @@ export const FilterBar = ({ filters, genres, onChange, onClear, resultCount }: F
   return (
     <div className="p-4">
       <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-end sm:gap-4">
-        <Select
+        <FilterSelect
           label="Genre"
           value={filters.genreId}
           options={genres.map((g) => ({ value: String(g.id), label: g.name }))}
           onChange={set('genreId')}
         />
-        <Select
+        <FilterSelect
           label="Year"
           value={filters.year}
           options={YEARS.map((y) => ({ value: y, label: y }))}
           onChange={set('year')}
         />
-        <Select
+        <FilterSelect
           label="Rating"
           value={filters.minRating}
           options={RATINGS.map((r) => ({ value: r, label: `${r}+ stars` }))}
           onChange={set('minRating')}
         />
-        <Select
+        <FilterSelect
           label="Sort By"
           value={filters.sortBy}
           options={SORT_OPTIONS}
