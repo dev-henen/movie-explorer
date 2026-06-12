@@ -28,7 +28,7 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex-1 max-w-lg">
+    <form onSubmit={handleSubmit} className="relative flex-1">
       <SearchIcon
         size={17}
         className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
