@@ -52,7 +52,7 @@ export const FilterBar = ({ filters, genres, onChange, onClear, resultCount }: F
     onChange({ ...filters, [key]: value });
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div className="p-4">
       <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-end sm:gap-4">
         <Select
           label="Genre"
