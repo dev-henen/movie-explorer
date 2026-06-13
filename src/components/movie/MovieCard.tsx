@@ -2,13 +2,12 @@ import { Link } from 'react-router-dom';
 import { getPosterUrl } from '../../api/tmdb';
 import type { Movie } from '../../types/tmdb';
 import { FilmIcon } from '../icons';
+import { releaseYear } from '../../utils/format';
 import { RatingBadge } from './RatingBadge';
 
 interface MovieCardProps {
   movie: Movie;
 }
-
-const releaseYear = (date: string) => (date ? new Date(date).getFullYear() : 'N/A');
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
   const posterUrl = getPosterUrl(movie.poster_path);

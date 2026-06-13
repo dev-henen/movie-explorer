@@ -5,27 +5,7 @@ import { MovieCardOverlay } from '../components/movie/MovieCardOverlay';
 import { ErrorState } from '../components/ui/ErrorState';
 import { useFavorites } from '../hooks/useFavorites';
 import { useMovieDetails, useSimilarMovies } from '../hooks/useMovieDetails';
-
-const fmt = new Intl.NumberFormat('en-US');
-
-const formatCurrency = (n: number) =>
-  n > 0 ? `$${fmt.format(n)}` : 'N/A';
-
-const formatRuntime = (minutes: number | null) => {
-  if (!minutes) return null;
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return `${h}h ${m}m`;
-};
-
-const formatDate = (dateStr: string) => {
-  if (!dateStr) return 'N/A';
-  return new Date(dateStr).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-};
+import { formatCurrency, formatDate, formatRuntime, formatVoteCount } from '../utils/format';
 
 const Skeleton = () => (
   <div className="animate-pulse space-y-6">
@@ -130,7 +110,7 @@ const MovieDetails = () => {
                 {movie.vote_average.toFixed(1)}
               </span>
               <span className="text-sm text-gray-400">
-                ({fmt.format(movie.vote_count)} votes)
+                ({formatVoteCount(movie.vote_count)} votes)
               </span>
             </div>
 
